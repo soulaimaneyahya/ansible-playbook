@@ -24,4 +24,4 @@ ansible-playbook --ask-become-pass ansible-playbook/install_nginx.yaml
 ansible-playbook --ask-become-pass ansible-playbook/remove_apache2.yaml
 ```
 
-Learn more: [Ansible playbook article](https://engineering.multividas.com/posts/ansible-playbooks)
+Learn more: [Ansible playbook article](https://engineering.multividas.com/posts/ansible-playbook)
