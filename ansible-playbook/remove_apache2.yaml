@@ -1,0 +1,21 @@
+---
+
+- hosts: web_servers
+  become: true
+  tasks:
+
+  - name: Remove apache2 for Ubuntu servers
+    apt:
+      name:
+        - apache2
+        - libapache2-mod-php
+      state: absent
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Remove apache2 for CentOS servers
+    dnf:
+      name:
+        - apache2
+        - libapache2-mod-php
+      state: absent
+    when: ansible_distribution == "CentOS"

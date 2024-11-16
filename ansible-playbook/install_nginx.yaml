@@ -1,0 +1,38 @@
+---
+
+- hosts: web_servers
+  become: true
+  vars_files:
+    - vars/nginx.yml
+    - vars/web_servers.yml
+
+  tasks:
+    - name: Install Nginx and PHP-FPM
+      apt:
+        name:
+          - "nginx={{ nginx_version }}"
+          - php-fpm
+        state: present
+      tags: install, nginx, php
+      register: nginx_register
+
+    - name: Ensure Nginx is enabled and started
+      service:
+        name: nginx
+        state: started
+        enabled: true
+      tags: configure, nginx
+      register: nginx_service
+
+    - name: Deploy Nginx configuration
+      template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+      tags: configure, nginx
+      register: nginx_conf_register
+
+    - name: Restart Nginx if changes detected
+      service:
+        name: nginx
+        state: restarted
+      when: nginx_conf_register.changed

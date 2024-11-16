@@ -1,0 +1,3 @@
+# Nginx-specific variables
+server_name: "{{ ansible_fqdn }}"
+listen_port: 80
